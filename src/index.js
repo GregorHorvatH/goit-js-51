@@ -1,83 +1,86 @@
-console.log("module 01.2");
+console.log('module 01.2');
 
-// const a = 2;
-// const b = 3;
-// const c = a + b;
+const a = 2;
+const b = 3;
+const c = a + b;
 
-// console.log('c:', c);
+console.log('c:', c);
 
-// const totalSalary = 100000000;
-// console.log("totalSalary:" , totalSalary, '$')
+const totalSalary = 100000000;
+console.log('totalSalary:', totalSalary, '$');
 
-// function sum(a, b) {
-//   return a + b;
-// }
+function sum(a, b) {
+  return a + b;
+}
 
-// console.log(sum(2, 3)); // 5
-// console.log(sum(20, 3)); // 23
-// console.log(sum(120, 30)); // 150
+console.log(sum(2, 3)); // 5
+console.log(sum(20, 3)); // 23
+console.log(sum(120, 30)); // 150
 
 // ======= scope ======
 // global scope
-// const x = 5;
+const x = 5;
 
-// // scope A
-// {
-//     const y = 10;
+// scope A
+{
+  const y = 10;
 
-//     console.log('--- Scope A ---');
-//     console.log("x:", x);
-//     console.log("y:", y);
+  console.log('--- Scope A ---');
+  console.log('x:', x);
+  console.log('y:', y);
 
-//     // scope B
-//     {
-//         const x = 11;
-//         const y = 11;
+  // scope B
+  {
+    const x = 11;
+    const y = 11;
 
-//         console.log('--- Scope B ---');
-//         console.log("x:", x);
-//         console.log("y:", y);
-//     }
-// }
+    console.log('--- Scope B ---');
+    console.log('x:', x);
+    console.log('y:', y);
+  }
+}
 
-// console.log("--- Global Scope ---");
-// console.log("x:", x);
+console.log('--- Global Scope ---');
+console.log('x:', x);
 
 // ===== example =====
-// const text = 'kjfhdsfg spam sdgsgiuyiog ariguy';
+const text = 'kjfhdsfg spam sdgsgiuyiog ariguy';
 
-// console.log(text.includes('sale') || text.includes('spam'));
+console.log(text.includes('sale') || text.includes('spam'));
 
+// ===================================================
 // Example 7 - Операторы сравнения и приведение типов
 // Каким будет результат выражений?
 
 // console.log(5 > 4); // true
-// console.log(10 >= "7"); // true
-// console.log("2" > "12");
-// console.log("2" < "12");
+// console.log(10 >= '7'); // true
+// console.log('2' > '12');
+// console.log('2' < '12');
 
-// console.log("4" == 4); // true
-// console.log("6" === 6); // false
-// console.log("false" === false); // false
+// console.log('4' == 4); // true
+// console.log('6' === 6); // false
+// console.log('false' === false); // false
 
 // console.log(1 == true);
 // console.log(1 === true);
 
-// console.log("0" == false); // true
-// console.log("0" === false);
+// console.log('0' == false); // true
+// console.log('0' === false);
 
-// console.log("Papaya" < "papaya");
-// console.log("Papaya" === "papaya");
+// console.log('Papaya' < 'papaya');
+// console.log('Papaya' === 'papaya');
 
 // console.log(undefined == null);
 // console.log(undefined === null);
 
+// ===================================================
 // Example 8 - Логические операторы
 // Каким будет результат выражений?
+
 // console.log(true && 3);
 // console.log(false && 3);
-// console.log(true && 4 && "kiwi");
-// console.log(true && 0 && "kiwi");
+// console.log(true && 4 && 'kiwi');
+// console.log(true && 0 && 'kiwi');
 // console.log(true || 3);
 // console.log(true || 3 || 4);
 // console.log(true || false || 7);
@@ -85,6 +88,7 @@ console.log("module 01.2");
 // console.log((1 && null && 2) > 0);
 // console.log(null || (2 && 3) || 4);
 
+// ===================================================
 // Example 9 - Значение по умолчанию и оператор нулевого слияния
 // Отрефактори код так, чтобы в переменную value присваивалось значение переменной incomingValue, если оно не равно undefined или null. В противном случае должно присваиваться значение defaultValue. Проверь работу скрипта для слепдующих значений переменной incomingValue: null, undefined, 0, false. Используй оператор ?? (nullish coalescing operator).
 
@@ -96,6 +100,7 @@ console.log("module 01.2");
 // console.log(value1);
 // console.log(value2);
 
+// ===================================================
 // Example 10 - Опертор % и методы строк
 // Напиши скрипт который переведёт значение totalMinutes (количество минут) в строку в формате часов и минут HH:MM.
 
@@ -116,23 +121,25 @@ console.log("module 01.2");
 
 // console.log(`${doubleDigitHours}:${doubleDigitMinutes}`);
 
+// ===================================================
 // Example 1 - Ввод пользователя и ветвления
 // Используя конструкцию if..else и prompt, напиши код, который будет спрашивать: "Какое официальное название JavaScript?". Если пользователь вводит ECMAScript, то показывай alert со строкой "Верно!", в противном случае - "Не знаете? ECMAScript!"
 
-// const userAnswer = prompt("Яка офіційна назва JavaScript?");
+// const userAnswer = prompt('Яка офіційна назва JavaScript?');
 
-// if (userAnswer.toLowerCase() === "ECMAScript".toLowerCase()) {
-//   console.log("Вірно!");
+// if (userAnswer.toLowerCase() === 'ECMAScript'.toLowerCase()) {
+//   console.log('Вірно!');
 // } else {
-//   console.log("Не вірно!");
+//   console.log('Не вірно!');
 // }
 
 // console.log(
-//   userAnswer.toLowerCase() === "ECMAScript".toLowerCase()
-//     ? "Вірно!"
-//     : "Не вірно!"
+//   userAnswer.toLowerCase() === 'ECMAScript'.toLowerCase()
+//     ? 'Вірно!'
+//     : 'Не вірно!'
 // );
 
+// ===================================================
 // Example 2 - Отображение времени (if...else)
 // Напиши скрипт для отображения часов и минут в консоли браузера в виде строки формата "14 ч. 26 мин.". Если значение переменной minutes равно 0, то выводи строку "14 ч.", без минут.
 
@@ -149,6 +156,7 @@ console.log("module 01.2");
 // // console.log(timestring);
 // console.log(minutes > 0 ? `${hours} ч. ${minutes} мин.` : `${hours} ч.`);
 
+// ===================================================
 // Example 3 - Ветвеления
 // Напиши скрипт, который выводит в консоль строку
 // "Это положительное число", если в prompt пользователь ввел число больше нуля.
@@ -169,6 +177,7 @@ console.log("module 01.2");
 
 // console.log(answer);
 
+// ===================================================
 // Example 4 - Вложенные ветвления
 // Напиши скрипт, который сравнивает числа в переменных a и b.
 // Если оба значения больше 100, то выведи в консоль максимальное из них.
@@ -192,6 +201,7 @@ console.log("module 01.2");
 //   console.log(b + 512);
 // }
 
+// ===================================================
 // Example 5 - Форматирование ссылки (endsWith)
 // Напиши скрипт который проверяет заканчивается ли значение переменной link символом /. Если нет, добавь в конец значения link этот символ. Используй конструкцию if...else.
 
@@ -205,6 +215,7 @@ console.log("module 01.2");
 // // Пиши код выше этой строки
 // console.log(link);
 
+// ===================================================
 // Example 6 - Форматирование ссылки (includes и логическое «И»)
 // Напиши скрипт который проверяет заканчивается ли значение переменной link символом /. Если нет, добавь в конец значения link этот символ, но только в том случае, если в link есть подстрока "my-site". Используй конструкцию if...else.
 
@@ -217,6 +228,7 @@ console.log("module 01.2");
 // // Пиши код выше этой строки
 // console.log(link);
 
+// ===================================================
 // Example 7 - Форматирование ссылки (тернарный оператор)
 // Выполни рефакторинг кода задачи номер 4 используя тернарный оператор.
 
@@ -230,6 +242,7 @@ console.log("module 01.2");
 
 // console.log(link);
 
+// ===================================================
 // Example 8 - if...else и логические операторы
 // Напиши скрипт который будет выводить в консоль браузера строку в зависимости от значения переменной hours.
 
@@ -252,6 +265,7 @@ console.log("module 01.2");
 
 // console.log(text);
 
+// ===================================================
 // Example 9 - Дедлайн сдачи проекта (if...else)
 // Напиши скрипт для отображения времени дедлайна сдачи проекта. Используй конструкцию if...else.
 
@@ -281,6 +295,7 @@ console.log("module 01.2");
 
 // console.log(text);
 
+// ===================================================
 // Example 11 - Цикл for
 // Напиши цикл for который выводит в консоль браузера числа по возрастанию от min до max, но только если число кратное 5.
 
@@ -291,6 +306,7 @@ console.log("module 01.2");
 //   if (i % 5 === 0) console.log(i);
 // }
 
+// ===================================================
 // Example 12 - Ввод пользователя и ветвления
 // Напиши скрипт, который будет спрашивать логин с помощью prompt и логировать результат в консоль браузера.
 
@@ -302,26 +318,26 @@ console.log("module 01.2");
 // Если введён пароль "Я админ", то вывести строку "Здравствуйте!"
 // Иначе выводить строку "Неверный пароль"
 
-// const login = prompt("Login");
+// const login = prompt('Login');
 
 // if (login) {
-//   if (login === "Админ") {
-//     const password = prompt("password");
+//   if (login === 'Админ') {
+//     const password = prompt('password');
 
-//     if (password === "Я админ") {
-//       console.log("Здравствуйте!");
+//     if (password === 'Я админ') {
+//       console.log('Здравствуйте!');
 //     } else {
-//       console.log("Неверный пароль");
+//       console.log('Неверный пароль');
 //     }
 //   } else {
-//     console.log("Я вас не знаю");
+//     console.log('Я вас не знаю');
 //   }
 // } else {
-//   console.log("Отменено");
+//   console.log('Отменено');
 // }
 
 // ====== import/export =====
-// import { sum } from "./utils.js";
+// import { sum } from './utils.js';
 
 // console.log(sum(1, 1));
 // console.log(sum(10, 1));
