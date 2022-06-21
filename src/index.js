@@ -321,4 +321,5 @@
 // }
 
 // ======= location test =======
-const location = 123; // Uncaught SyntaxError: Identifier 'location' has already been declared (at index.js:1:1)
+// const location = 123; // Uncaught SyntaxError: Identifier 'location' has already been declared (at index.js:1:1)
+console.log(location); // window.location
