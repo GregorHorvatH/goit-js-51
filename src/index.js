@@ -175,122 +175,148 @@
  * Типов транзацкий всего два.
  * Можно положить либо снять деньги со счета.
  */
-const Transaction = {
-  DEPOSIT: 'deposit',
-  WITHDRAW: 'withdraw',
-};
+// const Transaction = {
+//   DEPOSIT: 'deposit',
+//   WITHDRAW: 'withdraw',
+// };
 
-/*
- * Каждая транзакция это объект со свойствами: id, type и amount
- */
+// /*
+//  * Каждая транзакция это объект со свойствами: id, type и amount
+//  */
 
-const account = {
-  // Текущий баланс счета
-  balance: 0,
+// const account = {
+//   // Текущий баланс счета
+//   balance: 0,
 
-  // История транзакций
-  transactions: [],
+//   // История транзакций
+//   transactions: [],
 
-  /*
-   * Метод создает и возвращает объект транзакции.
-   * Принимает сумму и тип транзакции.
-   */
-  createTransaction(amount, type) {
-    return {
-      id: this.transactions.length,
-      amount, // amount: amount,
-      type, // type: type,
-      date: Date.now(),
-    };
-  },
+//   /*
+//    * Метод создает и возвращает объект транзакции.
+//    * Принимает сумму и тип транзакции.
+//    */
+//   createTransaction(amount, type) {
+//     return {
+//       id: this.transactions.length,
+//       amount, // amount: amount,
+//       type, // type: type,
+//       date: Date.now(),
+//     };
+//   },
 
-  /*
-   * Метод отвечающий за добавление суммы к балансу.
-   * Принимает сумму танзакции.
-   * Вызывает createTransaction для создания объекта транзакции
-   * после чего добавляет его в историю транзакций
-   */
-  deposit(amount) {
-    this.balance += amount;
+//   /*
+//    * Метод отвечающий за добавление суммы к балансу.
+//    * Принимает сумму танзакции.
+//    * Вызывает createTransaction для создания объекта транзакции
+//    * после чего добавляет его в историю транзакций
+//    */
+//   deposit(amount) {
+//     this.balance += amount;
 
-    const newTranslation = this.createTransaction(amount, Transaction.DEPOSIT);
+//     const newTranslation = this.createTransaction(amount, Transaction.DEPOSIT);
 
-    this.transactions.push(newTranslation);
-  },
+//     this.transactions.push(newTranslation);
+//   },
 
-  /*
-   * Метод отвечающий за снятие суммы с баланса.
-   * Принимает сумму танзакции.
-   * Вызывает createTransaction для создания объекта транзакции
-   * после чего добавляет его в историю транзакций.
-   *
-   * Если amount больше чем текущий баланс, выводи сообщение
-   * о том, что снятие такой суммы не возможно, недостаточно средств.
-   */
-  withdraw(amount) {
-    if (amount > this.balance) {
-      console.log('no money :(');
-    } else {
-      this.balance -= amount;
+//   /*
+//    * Метод отвечающий за снятие суммы с баланса.
+//    * Принимает сумму танзакции.
+//    * Вызывает createTransaction для создания объекта транзакции
+//    * после чего добавляет его в историю транзакций.
+//    *
+//    * Если amount больше чем текущий баланс, выводи сообщение
+//    * о том, что снятие такой суммы не возможно, недостаточно средств.
+//    */
+//   withdraw(amount) {
+//     if (amount > this.balance) {
+//       console.log('no money :(');
+//     } else {
+//       this.balance -= amount;
 
-      const newTranslation = this.createTransaction(
-        amount,
-        Transaction.WITHDRAW
-      );
+//       const newTranslation = this.createTransaction(
+//         amount,
+//         Transaction.WITHDRAW
+//       );
 
-      this.transactions.push(newTranslation);
-    }
-  },
+//       this.transactions.push(newTranslation);
+//     }
+//   },
 
-  /*
-   * Метод возвращает текущий баланс
-   */
-  getBalance() {
-    return this.balance;
-  },
+//   /*
+//    * Метод возвращает текущий баланс
+//    */
+//   getBalance() {
+//     return this.balance;
+//   },
 
-  /*
-   * Метод ищет и возвращает объект транзации по id
-   */
-  getTransactionDetails(id) {
-    for (const item of this.transactions) {
-      if (item.id === id) {
-        return item;
-      }
-    }
-  },
+//   /*
+//    * Метод ищет и возвращает объект транзации по id
+//    */
+//   getTransactionDetails(id) {
+//     for (const item of this.transactions) {
+//       if (item.id === id) {
+//         return item;
+//       }
+//     }
+//   },
 
-  /*
-   * Метод возвращает количество средств
-   * определенного типа транзакции из всей истории транзакций
-   */
-  getTransactionTotal(type) {
-    let sum = 0;
+//   /*
+//    * Метод возвращает количество средств
+//    * определенного типа транзакции из всей истории транзакций
+//    */
+//   getTransactionTotal(type) {
+//     let sum = 0;
 
-    for (const item of this.transactions) {
-      if (item.type === type) {
-        sum += item.amount;
-      }
-    }
+//     for (const item of this.transactions) {
+//       if (item.type === type) {
+//         sum += item.amount;
+//       }
+//     }
 
-    return sum;
-  },
-};
+//     return sum;
+//   },
+// };
 
-console.log(account.balance); // 0
+// console.log(account.balance); // 0
 
-account.deposit(100);
-account.deposit(50);
-console.log(account.balance); // 100
+// account.deposit(100);
+// account.deposit(50);
+// console.log(account.balance); // 100
 
-account.withdraw(140);
-account.withdraw(50);
-console.log(account.balance); // 10
+// account.withdraw(140);
+// account.withdraw(50);
+// console.log(account.balance); // 10
 
-console.log(account.transactions);
+// console.log(account.transactions);
 
-console.log(account.getTransactionDetails(2));
-console.log(account.getTransactionDetails(20));
+// console.log(account.getTransactionDetails(2));
+// console.log(account.getTransactionDetails(20));
 
-console.log(account.getTransactionTotal(Transaction.DEPOSIT));
-console.log(account.getTransactionTotal(Transaction.WITHDRAW));
+// console.log(account.getTransactionTotal(Transaction.DEPOSIT));
+// console.log(account.getTransactionTotal(Transaction.WITHDRAW));
+
+// ================= GAME ==================
+
+const COUNT_LIMIT = 5;
+const x = Math.floor(Math.random() * 100) + 1;
+let userInput;
+let count = 0;
+console.log(x);
+
+do {
+  userInput = Number(prompt('Enter your number'));
+  count += 1;
+
+  if (userInput > x) {
+    console.log(`${userInput} > x`);
+  }
+  if (userInput < x) {
+    console.log(`${userInput} < x`);
+  }
+} while (userInput !== x && count != COUNT_LIMIT);
+
+if (userInput === x) {
+  console.log('Hurray!!!');
+} else {
+  console.log(count);
+}
