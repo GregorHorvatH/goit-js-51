@@ -7,8 +7,11 @@ const todoItemTemplate = ({ id, text, isDone, date }) =>
         <span class="date-time">${new Date(date)}</span>
       </div>
     </label>
-    <button class="button success" data-type="view">view</button>
-    <button class="button danger" data-type="remove">x</button>
+
+    <div>
+      <button class="button success" data-type="view">view</button>
+      <button class="button danger" data-type="remove">x</button>
+    </div>
   </li>`;
 
 export default todoItemTemplate;
