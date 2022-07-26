@@ -1,7 +1,8 @@
 import todoItemTemplate from './todoItemTemplate.js';
+import modalTemplate from './modalTemplate.js';
 import mockData from './mockData.js';
 
-const items = mockData;
+let items = mockData;
 
 const refs = {
   todoList: document.querySelector('.todo-list'),
@@ -60,11 +61,6 @@ const addItem = (text) => {
   render();
 };
 
-const handleRemoveItem = () => {
-  items.shift();
-  render();
-};
-
 const handleSubmit = (e) => {
   e.preventDefault();
   addItem(e.target.elements.text.value);
@@ -83,9 +79,65 @@ const handleSortChange = (e) => {
   render();
 };
 
+const removeItem = (id) => {
+  items = items.filter((item) => item.id !== id);
+
+  render();
+};
+
+const updateItem = (id) => {
+  items = items.map((item) =>
+    item.id === id
+      ? {
+          ...item,
+          isDone: !item.isDone,
+        }
+      : item
+  );
+
+  render();
+};
+
+const viewItem = (id) => {
+  const currentItem = items.find((item) => item.id === id);
+  const instance = basicLightbox.create(modalTemplate(currentItem.text));
+  const button = instance.element().querySelector('button');
+
+  button.addEventListener('click', instance.close);
+  instance.show();
+};
+
+const onButtonClick = (type, id) => {
+  switch (type) {
+    case 'view':
+      viewItem(id);
+      break;
+
+    case 'remove':
+      removeItem(id);
+      break;
+  }
+};
+
+const handleItemClick = (e) => {
+  const parent = e.target.closest('li');
+  const { id } = parent.dataset;
+
+  switch (e.target.nodeName) {
+    case 'BUTTON':
+      onButtonClick(e.target.dataset.type, id);
+      break;
+
+    case 'INPUT':
+      updateItem(id);
+      break;
+  }
+};
+
 render();
 
 // ---- event listeners ----
 refs.form.addEventListener('submit', handleSubmit);
 refs.queryInput.addEventListener('input', handleQueryInput);
 refs.sortBy.addEventListener('change', handleSortChange);
+refs.todoList.addEventListener('click', handleItemClick);

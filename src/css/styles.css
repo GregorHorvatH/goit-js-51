@@ -216,3 +216,9 @@ fieldset legend {
   display: flex;
   column-gap: 10px;
 }
+
+.modal-body {
+  background-color: #fff;
+  padding: 50px;
+  border-radius: 5px;
+}
