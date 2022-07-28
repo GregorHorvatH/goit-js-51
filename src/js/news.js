@@ -42,4 +42,51 @@ const handleQueryChange = (e) => {
     .finally(hideLoader);
 };
 
-refs.query.addEventListener('change', handleQueryChange);
+function throttle(callback, delay) {
+  let timerId = 0;
+
+  return function (e) {
+    if (timerId) return;
+
+    timerId = setTimeout(() => {
+      callback(e);
+      timerId = 0;
+    }, delay);
+  };
+}
+
+function debounce(callback, delay) {
+  let timerId = 0;
+
+  return function (e) {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    timerId = setTimeout(() => {
+      callback(e);
+      timerId = 0;
+    }, delay);
+  };
+}
+
+refs.query.addEventListener('input', debounce(handleQueryChange, 500));
+
+// ----- question ------
+const rps = (p1, p2) => {
+  if (p1 === p2) return 'Draw!';
+
+  const rules = {
+    rock: 'scissors',
+    paper: 'rock',
+    scissors: 'paper',
+  };
+
+  return rules[p1] === p2 ? 'Player 1 won!' : 'Player 2 won!';
+};
+
+console.log(rps('paper', 'paper'));
+console.log(rps('rock', 'paper'));
+console.log(rps('scissors', 'paper'));
+console.log(rps('rock', 'scissors'));
+console.log(rps('scissors', 'paper'));
