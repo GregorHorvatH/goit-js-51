@@ -40,6 +40,7 @@
   "dependencies": {
     "basiclightbox": "^5.0.4",
     "handlebars": "^4.1.2",
+    "lodash": "^4.17.21",
     "uuid": "^8.3.2"
   }
 }

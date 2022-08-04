@@ -1,17 +1,28 @@
+import _ from 'lodash';
 import * as basicLightbox from 'basiclightbox';
 import { v4 as uuidv4 } from 'uuid';
-import todoItemTemplate from './js/todoItemTemplate.js';
-import modalTemplate from './js/modalTemplate.js';
-import mockData from './js/mockData.js';
+import todoItemTemplate from './js/todoItemTemplate';
+import modalTemplate from './js/modalTemplate';
+// import mockData from './js/mockData';
+import {
+  readTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  saveTodosForm,
+  loadTodosForm,
+} from './js/todosApi';
 
 import 'basiclightbox/dist/basicLightbox.min.css';
 import './css/styles.css';
 
-let items = mockData;
+// let items = mockData;
+let items = readTodos();
 
 const refs = {
   todoList: document.querySelector('.todo-list'),
   form: document.querySelector('.form'),
+  formText: document.querySelector('.form-text'),
   sortBy: document.querySelector('.sort-by'),
   queryInput: document.querySelector('.query-input'),
 };
@@ -62,31 +73,40 @@ const addItem = text => {
     date: Date.now(),
   };
 
+  createTodo(newTodo);
   items.unshift(newTodo);
+
   render();
 };
+
+const saveFormData = () =>
+  saveTodosForm({ query, sortBy, input: refs.formText.value });
 
 const handleSubmit = e => {
   e.preventDefault();
   addItem(e.target.elements.text.value);
   e.target.elements.text.value = '';
+  saveFormData();
 };
 
 const handleQueryInput = e => {
   query = e.target.value.toLowerCase();
 
+  saveFormData();
   render();
 };
 
 const handleSortChange = e => {
   sortBy = e.target.value.toLowerCase();
 
+  saveFormData();
   render();
 };
 
 const removeItem = id => {
   items = items.filter(item => item.id !== id);
 
+  deleteTodo(id);
   render();
 };
 
@@ -100,6 +120,7 @@ const updateItem = id => {
       : item,
   );
 
+  updateTodo(id);
   render();
 };
 
@@ -112,7 +133,7 @@ const viewItem = id => {
   instance.show();
 };
 
-const onButtonClick = (type, id) => {
+const onItemButtonClick = (type, id) => {
   switch (type) {
     case 'view':
       viewItem(id);
@@ -130,7 +151,7 @@ const handleItemClick = e => {
 
   switch (e.target.nodeName) {
     case 'BUTTON':
-      onButtonClick(e.target.dataset.type, id);
+      onItemButtonClick(e.target.dataset.type, id);
       break;
 
     case 'INPUT':
@@ -139,6 +160,18 @@ const handleItemClick = e => {
   }
 };
 
+const readFormData = () => {
+  const formData = loadTodosForm();
+
+  refs.formText.value = formData.input || '';
+  refs.sortBy.value = formData.sortBy || '';
+  refs.queryInput.value = formData.query || '';
+
+  sortBy = formData.sortBy || '';
+  query = formData.query || '';
+};
+
+readFormData();
 render();
 
 // ---- event listeners ----
@@ -146,3 +179,4 @@ refs.form.addEventListener('submit', handleSubmit);
 refs.queryInput.addEventListener('input', handleQueryInput);
 refs.sortBy.addEventListener('change', handleSortChange);
 refs.todoList.addEventListener('click', handleItemClick);
+refs.formText.addEventListener('input', _.throttle(saveFormData, 500));
