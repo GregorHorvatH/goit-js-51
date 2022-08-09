@@ -8,6 +8,7 @@
   </head>
   <body>
     <header>
+      <span class="clock">YYYY-MM-DD hh:mm:ss</span>
       <form class="form">
         <label>
           <span>Enter text</span>
@@ -16,6 +17,12 @@
             type="text"
             name="text"
             placeholder="enter new todo..."
+          />
+          <input
+            class="input form-text deadline"
+            type="text"
+            name="deadline"
+            placeholder="enter deadline..."
           />
         </label>
         <button class="button success" type="submit">+ Add</button>

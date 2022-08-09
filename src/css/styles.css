@@ -17,6 +17,10 @@ header {
   background-color: #ffffff;
 }
 
+.clock {
+  padding: 10px;
+}
+
 nav {
   display: flex;
   column-gap: 10px;

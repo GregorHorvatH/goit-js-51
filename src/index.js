@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import * as basicLightbox from 'basiclightbox';
 import { v4 as uuidv4 } from 'uuid';
+import flatpickr from 'flatpickr';
+import moment from 'moment';
 import todoItemTemplate from './js/todoItemTemplate';
 import modalTemplate from './js/modalTemplate';
 // import mockData from './js/mockData';
@@ -14,17 +16,20 @@ import {
 } from './js/todosApi';
 
 import 'basiclightbox/dist/basicLightbox.min.css';
+import 'flatpickr/dist/flatpickr.min.css';
 import './css/styles.css';
 
 // let items = mockData;
 let items = readTodos();
 
 const refs = {
+  clock: document.querySelector('.clock'),
   todoList: document.querySelector('.todo-list'),
   form: document.querySelector('.form'),
   formText: document.querySelector('.form-text'),
   sortBy: document.querySelector('.sort-by'),
   queryInput: document.querySelector('.query-input'),
+  deadline: document.querySelector('.deadline'),
 };
 let sortBy = '';
 let query = '';
@@ -71,6 +76,7 @@ const addItem = text => {
     text,
     isDone: false,
     date: Date.now(),
+    deadline: moment(refs.deadline.value, 'DD/MM/YY').valueOf(),
   };
 
   createTodo(newTodo);
@@ -86,6 +92,7 @@ const handleSubmit = e => {
   e.preventDefault();
   addItem(e.target.elements.text.value);
   e.target.elements.text.value = '';
+  refs.deadline.value = '';
   saveFormData();
 };
 
@@ -171,8 +178,35 @@ const readFormData = () => {
   query = formData.query || '';
 };
 
+const renderClock = () => {
+  const leesonEnd = moment(
+    '2022-08-09 21:30:00',
+    'YYYY-MM-DD HH:mm:ss',
+  ).valueOf();
+  const currentTime = moment().valueOf();
+  const diff = leesonEnd - currentTime;
+
+  let seconds = Math.floor(diff / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+
+  seconds = seconds % 60;
+  minutes = minutes % 60;
+
+  // refs.clock.textContent = moment().format('YYYY-MM-DD HH:mm:ss');
+  refs.clock.textContent = `${hours}:${minutes}:${seconds}`;
+};
+
+flatpickr(refs.deadline, {
+  allowInput: true,
+  dateFormat: 'd/m/Y',
+});
+
 readFormData();
 render();
+
+renderClock();
+setInterval(renderClock, 1000);
 
 // ---- event listeners ----
 refs.form.addEventListener('submit', handleSubmit);
