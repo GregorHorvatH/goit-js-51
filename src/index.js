@@ -20,7 +20,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import './css/styles.css';
 
 // let items = mockData;
-let items = readTodos();
+let items = [];
 
 const refs = {
   clock: document.querySelector('.clock'),
@@ -30,6 +30,7 @@ const refs = {
   sortBy: document.querySelector('.sort-by'),
   queryInput: document.querySelector('.query-input'),
   deadline: document.querySelector('.deadline'),
+  loader: document.querySelector('.loader'),
 };
 let sortBy = '';
 let query = '';
@@ -167,9 +168,7 @@ const handleItemClick = e => {
   }
 };
 
-const readFormData = () => {
-  const formData = loadTodosForm();
-
+const readFormData = formData => {
   refs.formText.value = formData.input || '';
   refs.sortBy.value = formData.sortBy || '';
   refs.queryInput.value = formData.query || '';
@@ -179,22 +178,22 @@ const readFormData = () => {
 };
 
 const renderClock = () => {
-  const leesonEnd = moment(
-    '2022-08-09 21:30:00',
-    'YYYY-MM-DD HH:mm:ss',
-  ).valueOf();
-  const currentTime = moment().valueOf();
-  const diff = leesonEnd - currentTime;
+  // const leesonEnd = moment(
+  //   '2022-08-09 21:30:00',
+  //   'YYYY-MM-DD HH:mm:ss',
+  // ).valueOf();
+  // const currentTime = moment().valueOf();
+  // const diff = leesonEnd - currentTime;
 
-  let seconds = Math.floor(diff / 1000);
-  let minutes = Math.floor(seconds / 60);
-  let hours = Math.floor(minutes / 60);
+  // let seconds = Math.floor(diff / 1000);
+  // let minutes = Math.floor(seconds / 60);
+  // let hours = Math.floor(minutes / 60);
 
-  seconds = seconds % 60;
-  minutes = minutes % 60;
+  // seconds = seconds % 60;
+  // minutes = minutes % 60;
 
-  // refs.clock.textContent = moment().format('YYYY-MM-DD HH:mm:ss');
-  refs.clock.textContent = `${hours}:${minutes}:${seconds}`;
+  // refs.clock.textContent = `${hours}:${minutes}:${seconds}`;
+  refs.clock.textContent = moment().format('YYYY-MM-DD HH:mm:ss');
 };
 
 flatpickr(refs.deadline, {
@@ -202,11 +201,23 @@ flatpickr(refs.deadline, {
   dateFormat: 'd/m/Y',
 });
 
-readFormData();
-render();
-
 renderClock();
 setInterval(renderClock, 1000);
+
+refs.loader.classList.add('show');
+
+Promise.all([readTodos(), loadTodosForm()])
+  .then(([data, formData]) => {
+    items = data;
+    readFormData(formData);
+    render();
+  })
+  .catch(error => {
+    console.log('error:', error);
+  })
+  .finally(() => {
+    refs.loader.classList.remove('show');
+  });
 
 // ---- event listeners ----
 refs.form.addEventListener('submit', handleSubmit);

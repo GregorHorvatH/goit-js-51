@@ -86,11 +86,6 @@ h3.home-title {
   padding: 5px 10px;
 }
 
-.loader {
-  margin: 0;
-  text-align: center;
-}
-
 .todos {
   display: flex;
   flex-direction: column;
@@ -244,6 +239,8 @@ fieldset legend {
 }
 
 .loader {
+  margin: 0;
+  text-align: center;
   display: none;
 }
 
