@@ -206,11 +206,28 @@ setInterval(renderClock, 1000);
 
 refs.loader.classList.add('show');
 
-Promise.all([readTodos(), loadTodosForm()])
-  .then(([data, formData]) => {
+// Promise.all([readTodos(), loadTodosForm()])
+//   .then(([data, formData]) => {
+//     items = data;
+//     readFormData(formData);
+//     render();
+//   })
+//   .catch(error => {
+//     console.log('error:', error);
+//   })
+//   .finally(() => {
+//     refs.loader.classList.remove('show');
+//   });
+
+Promise.allSettled([readTodos(), loadTodosForm()])
+  .then(([{ value: data = [] }, { value: formData = {}, reason }]) => {
     items = data;
     readFormData(formData);
     render();
+
+    if (reason) {
+      console.log(reason);
+    }
   })
   .catch(error => {
     console.log('error:', error);

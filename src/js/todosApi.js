@@ -50,7 +50,7 @@ export const saveTodosForm = formData => {
 };
 
 export const loadTodosForm = () =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     setTimeout(() => {
       let formData = {};
 
@@ -60,6 +60,7 @@ export const loadTodosForm = () =>
         console.log(error);
       }
 
-      resolve(formData || {});
+      reject('error happened');
+      // resolve(formData || {});
     }, 600);
   });
