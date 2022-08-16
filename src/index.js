@@ -73,17 +73,18 @@ const render = () => {
 
 const addItem = text => {
   const newTodo = {
-    id: uuidv4(), // script imported from cdnjs
+    // id: uuidv4(), // script imported from cdnjs
     text,
     isDone: false,
     date: Date.now(),
     deadline: moment(refs.deadline.value, 'DD/MM/YY').valueOf(),
   };
 
-  createTodo(newTodo);
-  items.unshift(newTodo);
+  createTodo(newTodo).then(data => {
+    items.unshift(data);
 
-  render();
+    render();
+  });
 };
 
 const saveFormData = () =>
@@ -119,16 +120,11 @@ const removeItem = id => {
 };
 
 const updateItem = id => {
-  items = items.map(item =>
-    item.id === id
-      ? {
-          ...item,
-          isDone: !item.isDone,
-        }
-      : item,
-  );
+  const idx = items.findIndex(item => item.id === id);
 
-  updateTodo(id);
+  items[idx].isDone = !items[idx].isDone;
+
+  updateTodo(id, { isDone: items[idx].isDone });
   render();
 };
 
@@ -219,11 +215,9 @@ refs.loader.classList.add('show');
 //     refs.loader.classList.remove('show');
 //   });
 
-Promise.allSettled([readTodos(), loadTodosForm()])
+Promise.allSettled([, loadTodosForm()])
   .then(([{ value: data = [] }, { value: formData = {}, reason }]) => {
-    items = data;
     readFormData(formData);
-    render();
 
     if (reason) {
       console.log(reason);
@@ -231,6 +225,18 @@ Promise.allSettled([readTodos(), loadTodosForm()])
   })
   .catch(error => {
     console.log('error:', error);
+  })
+  .finally(() => {
+    refs.loader.classList.remove('show');
+  });
+
+readTodos()
+  .then(data => {
+    items = data;
+    render();
+  })
+  .catch(error => {
+    console.log(error.message);
   })
   .finally(() => {
     refs.loader.classList.remove('show');
