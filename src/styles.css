@@ -1,3 +1,26 @@
 body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
   font-family: Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+.loader {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: auto;
 }
