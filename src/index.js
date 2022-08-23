@@ -1,7 +1,11 @@
 import axios from 'axios';
 import './styles.css';
 
-axios.defaults.baseURL = 'https://hn.algolia.com/api/v1';
+// axios.defaults.baseURL = 'https://hn.algolia.com/api/v1';
+
+// &q=cats&per_page=5&page=10';
+axios.defaults.baseURL =
+  'https://pixabay.com/api?key=17035174-bfc38ce79fe188f7bfeb26d93';
 
 const refs = {
   form: document.querySelector('.form'),
@@ -11,16 +15,22 @@ const refs = {
   loadMore: document.querySelector('.load-more'),
 };
 
-const HITS_PER_PAGE = 40;
+const DEFAULT_CURRENT_PAGE = 1;
+const HITS_PER_PAGE = 5;
+
 let isLoading = false;
 let items = [];
 let query = '';
-let currentPage = 0;
+let currentPage = DEFAULT_CURRENT_PAGE;
 let totalPages = 0;
 
 const renderList = items => {
   const list = items
-    .map(({ title, url }) => `<ul><a href="${url}">${title}</a></ul>`)
+    // .map(({ title, url }) => `<li><a href="${url}">${title}</a></li>`)
+    .map(
+      ({ previewURL, pageURL }) =>
+        `<li><a href="${pageURL}"><img src="${previewURL}" /></a></li>`,
+    )
     .join('');
 
   refs.list.insertAdjacentHTML('beforeend', list);
@@ -30,25 +40,31 @@ const loaderOn = () => refs.loader.classList.add('visible');
 
 const loaderOff = () => refs.loader.classList.remove('visible');
 
-const fetchData = () => {
+const fetchData = async () => {
   isLoading = true;
   loaderOn();
 
-  axios
-    .get(
-      `/search?query=${query}&page=${currentPage}&hitsPerPage=${HITS_PER_PAGE}`,
-    )
-    .then(({ data }) => {
-      items = [...items, data.hits];
-      totalPages = data.nbPages;
-      renderList(data.hits);
-      // renderButtons();
-    })
-    .catch(error => console.log(error.message))
-    .finally(() => {
-      loaderOff();
-      isLoading = false;
-    });
+  try {
+    const response = await fetch(
+      `https://pixabay.com/api?key=17035174-bfc38ce79fe188f7bfeb26d93&q=${query}&per_page=${HITS_PER_PAGE}&page=${currentPage}`,
+    );
+    const data = await response.json();
+
+    // const { data } = await axios.get(
+    //   `&q=${query}&per_page=${HITS_PER_PAGE}&page=${currentPage}`,
+    // );
+
+    // then
+    items = [...items, data.hits];
+    totalPages = data.totalHits / HITS_PER_PAGE;
+    renderList(data.hits);
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  // finally
+  loaderOff();
+  isLoading = false;
 };
 
 const handleSubmit = e => {
@@ -58,7 +74,7 @@ const handleSubmit = e => {
 
   query = e.target.elements.query.value;
   refs.list.innerHTML = '';
-  currentPage = 0;
+  currentPage = DEFAULT_CURRENT_PAGE;
   items = [];
 
   if (!query) return;
@@ -97,16 +113,25 @@ const handleWindowScroll = ({ target }) => {
 
 // refs.pages.addEventListener('click', handlePageClick);
 
-refs.form.addEventListener('submit', handleSubmit);
 // refs.loadMore.addEventListener('click', handleLoadMoreClick);
+refs.form.addEventListener('submit', handleSubmit);
 refs.list.addEventListener('scroll', handleWindowScroll);
 
-// scrollHeight: 740
-// scrollLeft: 0
-// scrollTop: 20.5
-// scrollWidth: 716
+// ----- async / await -----
+const myTimeout = () =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      console.log('in timeout');
+      resolve();
+    }, 1000);
+  });
 
-// clientHeight: 717
-// clientLeft: 0
-// clientTop: 0
-// clientWidth: 716
+const fn1 = async () => {
+  await myTimeout();
+
+  console.log('after timeout');
+};
+
+console.log('start');
+fn1();
+console.log('end');
