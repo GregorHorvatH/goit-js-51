@@ -118,20 +118,68 @@ refs.form.addEventListener('submit', handleSubmit);
 refs.list.addEventListener('scroll', handleWindowScroll);
 
 // ----- async / await -----
-const myTimeout = () =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      console.log('in timeout');
-      resolve();
-    }, 1000);
-  });
+// const myTimeout = () =>
+//   new Promise(resolve => {
+//     setTimeout(() => {
+//       console.log('in timeout');
+//       resolve();
+//     }, 1000);
+//   });
 
-const fn1 = async () => {
-  await myTimeout();
+// const fn1 = async () => {
+//   await myTimeout();
 
-  console.log('after timeout');
-};
+//   console.log('after timeout');
+// };
 
-console.log('start');
-fn1();
-console.log('end');
+// console.log('start');
+// fn1();
+// console.log('end');
+
+// ----- Promise.all ------
+// const myTimeout1 = () =>
+//   new Promise(resolve => {
+//     setTimeout(() => {
+//       console.log('in timeout 1');
+//       resolve('result 1');
+//     }, 400);
+//   });
+
+// const myTimeout2 = () =>
+//   new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       console.log('in timeout 2');
+//       // resolve('result 2');
+//       reject('error in timeout 2');
+//     }, 600);
+//   });
+
+// const myTimeout3 = () =>
+//   new Promise(resolve => {
+//     setTimeout(() => {
+//       console.log('in timeout 3');
+//       resolve('result 3');
+//     }, 1000);
+//   });
+
+// const runMyTimeoutsAsync = async () => {
+//   const res1 = await myTimeout3();
+//   const res2 = await myTimeout2();
+//   const res3 = await myTimeout1();
+
+//   console.log('async/await:', [res1, res2, res3]);
+// };
+
+// runMyTimeoutsAsync();
+
+// const runMyTimeoutsPromiseAll = async () => {
+//   // try {
+//   const results = await Promise.all([myTimeout3(), myTimeout2(), myTimeout1()]);
+
+//   console.log('promise.all:', results);
+//   // } catch (error) {
+//   //   console.log(error);
+//   // }
+// };
+
+// runMyTimeoutsPromiseAll();
